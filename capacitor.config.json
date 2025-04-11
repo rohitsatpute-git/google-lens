@@ -1,0 +1,10 @@
+{
+  "appId": "com.example.app",
+  "appName": "google-clone",
+  "webDir": "dist",
+  "plugins": {
+    "Camera": {
+      "permissions": true
+    }
+  }
+}
