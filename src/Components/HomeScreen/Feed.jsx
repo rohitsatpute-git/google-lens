@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 
-function Feed() {
+function Feed({ imgSrc, text }) {
     return (
-        <div className='flex flex-col rounded-lg' >
-            <img src='.' alt='img' className='w-full h-[100px] rounded-t-lg'/>
-            <div className='bg-[#1E1E1E] rounded-b-lg px-4 py-2 text-[#fff]/50'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, harum, placeat deserunt veritatis ut nisi, eos exercitationem recusandae possimus at quisquam magni aliquid molestias.
+        <div className='flex flex-col rounded-lg text-[#fff]/85 border border-[#fff]/35' >
+            <img src={imgSrc} alt='img' className='w-full h-[150px] rounded-t-lg object-cover'/>
+            <div className=' rounded-b-lg px-4 py-1 line-clamp-3'>
+                {text}
             </div> 
         </div>
     )

@@ -1,10 +1,43 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 const VoiceToText = () => {
   const [text, setText] = useState('');
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
-
+  useEffect(() => {
+    try {
+      // Try modern API first
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+          .catch((err) => {
+            console.error('Mic permission denied (modern):', err);
+          });
+      } 
+      // Fall back to legacy API
+      else if (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia) {
+        const getUserMedia = navigator.getUserMedia || 
+                            navigator.webkitGetUserMedia || 
+                            navigator.mozGetUserMedia;
+        
+        // Legacy API uses callbacks instead of promises
+        getUserMedia({ audio: true },
+          // Success callback
+          () => {
+            console.log('Microphone permission granted');
+          },
+          // Error callback
+          (err) => {
+            console.error('Mic permission denied (legacy):', err);
+          }
+        );
+      } else {
+        console.warn('No getUserMedia API available in this browser');
+      }
+    } catch (error) {
+      console.error('Error requesting microphone access:', error);
+    }
+  }, []);
+  
   const initRecognition = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
@@ -50,7 +83,8 @@ const VoiceToText = () => {
   return {
     handleStart,
     handleStop,
-    text
+    text,
+    listening
   }
 };
 

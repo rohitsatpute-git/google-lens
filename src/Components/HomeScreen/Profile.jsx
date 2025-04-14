@@ -5,6 +5,7 @@ function Profile() {
     return (
         <img src={profileImageSrc}
             className='rounded-full object-cover w-[40px] h-[40px] cursor-pointer'
+            alt='profile'
             />
     )
 }

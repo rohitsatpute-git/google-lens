@@ -1,22 +1,34 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import useAudioConverter from '../hooks/useAudioConverter';
-import { Plus } from 'lucide-react';
+import { Plus, StepBack } from 'lucide-react';
+import useSideEffects from '../hooks/useSideEffects';
 
-function Audio({ setShowAudioListening }) {
-    // const { startListening, stopListening, transcript, browserSupportsSpeechRecognition }  = useSpeechRecognization();
-    const { handleStart, handleStop, text } = useAudioConverter();
+function Audio({ setShowAudioListening, setSearchText, setShowSearch }) {
+    const { handleStart, handleStop, text, listening } = useAudioConverter();
 
+    useEffect(() => {
+        handleStart();
+    }, [])
 
+    useSideEffects(() => {
+        if(!listening) {
+
+            setShowAudioListening(false);
+            setShowSearch(true);
+            setSearchText(text);
+        }
+    }, [text, listening])
+
+    const onCancelClicked = useCallback(() => {
+        handleStop();
+        setShowAudioListening(false)
+    }, [])
 
     return (
-        <div className='fixed flex inset-0 flex-col bg-[#1E1E1E] z-[10] gap-x-4 items-center justify-around '>
-            <Plus className='rotate-45 cursor-pointer absolute top-2 left-2'/>
-
-            {text}
-            <div className='flex flex-row gap-x-8 text-[#fff]/50'>
-                <div onClick={handleStart}>start</div>
-                <div onClick={handleStop}>stop</div>
-            </div>
+        <div className='fixed flex inset-0 flex-col bg-[#1E1E1E] z-[20] gap-x-4 items-center justify-around text-[#fff]/75 gap-y-4 pt-20 px-4'>
+            <StepBack className='cursor-pointer absolute top-2 left-2 bg-[#fff]/75 p-1 rounded-md text-[#000]/50' onClick={onCancelClicked}/>
+            <span>{listening ? 'Speak now...' : 'not listening'}</span>
+            <span>{text}</span>
         </div>
     )
 }

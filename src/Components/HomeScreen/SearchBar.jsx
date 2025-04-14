@@ -20,7 +20,7 @@ function SearchBar({ setShowSearch, setShowLens, setShowAudioListening }) {
     }, [])
 
     return (
-        <div className='flex border rounded-3xl px-4 py-1  items-center shadow-2xl'>
+        <div className='flex border rounded-3xl px-4 py-1 border-none  items-center shadow-2xl bg-[#424242] text-[#fff]/85'>
             <Search onClick={onSearchClicked}/>
             <input className='px-4 py-2 outline-none ' placeholder='Search' onClick={onSearchClicked}/>
             <div className='self-end flex gap-x-4 items-center ml-auto h-full'>

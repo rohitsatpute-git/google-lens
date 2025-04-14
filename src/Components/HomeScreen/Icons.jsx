@@ -6,28 +6,30 @@ function Icons() {
     const icons = [
         {
             icon: <ImagePlus/>,
-            bg: '[#000]',
+            bg: '[#fff]',
         },
         {
             icon: <Languages/>,
-            bg: '[#000]',
+            bg: '[]',
         },
         {
             icon: <GraduationCap/>,
-            bg: '[#000]',
+            bg: '[]',
         },
         {
             icon: <Music2/>,
-            bg: '[#000]',
+            bg: '[]',
         }
     ]
 
 
+
+
     return (
-        <div className='flex flex-row gap-x-4 justify-evenly'>
+        <div className='flex flex-row gap-x-2 justify-evenly'>
             {
                 icons.map((icon, index) => (
-                    <span key={index} className={`rounded-lg px-4 py-2 bg-${icon.bg} border border-amber-100`}>
+                    <span key={index} className={`rounded-3xl px-6 icon-span py-4 `}>
                         {icon.icon}
                     </span>
                 ))

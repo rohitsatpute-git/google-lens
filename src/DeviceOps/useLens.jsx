@@ -5,20 +5,22 @@ import Cropper from 'react-cropper';
 const useLens = () => {
   const [photo, setPhoto] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
+  const [error, setError] = useState(null);
   const cropperRef = useRef(null);
 
   const takePhoto = async () => {
     try {
-      const image = await Camera.pickImages({
-        quality: 90,
+      const image = await Camera.getPhoto({
+        quality: 100,
         allowEditing: true,
         resultType: CameraResultType.DataUrl,
         source: CameraSource.Camera,
       });
+      setPhoto(image.dataUrl);
 
-      setPhoto(image.photos[0].webPath);
     } catch (error) {
-      console.error('Camera error:', error);
+      console.warn('Camera error:', error);
+      setError(error)
     }
   };
 
@@ -28,44 +30,16 @@ const useLens = () => {
     }
   };
 
+  console.log("cropped image", croppedImage)
+
   return {
     takePhoto, 
     croppedImage,
     getCropData,
     photo,
-    cropperRef
+    error
   }
-  // (
-  //   <div>
-  //     <button onClick={takePhoto} style={{ padding: 10, fontSize: 18 }}>
-  //       Capture
-  //     </button>
 
-  //     {photo && (
-  //       <div className="cropper-container">
-  //         <Cropper
-  //           ref={cropperRef}
-  //           src={photo}
-  //           style={{ height: 400, width: '100%' }}
-  //           aspectRatio={1} 
-  //           guides={true}
-  //           crop={e => console.log(e.detail)}
-  //         />
-  //       </div>
-        
-  //     )}
-
-  //     <button onClick={getCropData}>Crop Image</button>
-
-
-  //     {croppedImage && (
-  //       <div className="cropped-image-container">
-  //         <h3>Cropped Image</h3>
-  //         <img src={croppedImage} alt="Cropped" />
-  //       </div>
-  //     )}
-  //   </div>
-  // );
 };
 
 export default useLens;

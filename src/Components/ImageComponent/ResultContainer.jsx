@@ -3,11 +3,11 @@ import Item from './Item'
 
 function ResultContainer({ img }) {
     return (
-        <div className=' gap-x-4 grid grid-cols-2 w-full justify-between rounded-lg max-h-[100%] overflow-y-scroll gap-4'>
+        <div className='w-full columns-2 overflow-y-scroll  overflow-x-hidden no-scrollbar'>
             {
-                Array.from({ length: 500 }).map(item => (
+                Array.from({ length: 50 }).map((item, index) => (
                     
-                    <Item img={img}/>
+                    <Item key={index} img={img}/>
                 ))
             }
         </div>

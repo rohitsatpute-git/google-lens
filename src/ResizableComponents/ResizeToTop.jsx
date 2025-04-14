@@ -1,4 +1,3 @@
-import { User } from 'lucide-react';
 import React, { useCallback, useEffect, useRef } from 'react'
 
 function ResizeToTop({ resizabaleRef, setTop }) {
@@ -37,7 +36,8 @@ function ResizeToTop({ resizabaleRef, setTop }) {
         resizabaleRef.current.addEventListener('touchstart', onMouseDown)
         
         return () => {
-            resizabaleRef.current.removeEventListener('mousedown', onMouseDown);
+            if(resizabaleRef.current)
+            resizabaleRef.current.removeEventListener('touchstart', onMouseDown);
             // document.removeEventListener('mousemove', onMouseMove);
             // document.removeEventListener('mouseup', onMouseUp);
             document.removeEventListener('touchmove', onMouseMove);
