@@ -17,13 +17,13 @@ function Lens({ setShowLens }) {
     }, [error])
 
     useSideEffects(() => {
+        console.log("sending get cropped adta")
         getCropData()
     }, [photo])
 
     const onClose = useCallback(() => {
         setShowLens(false)
     }, [])
-
 
     return (
         <div className='fixed inset-0 flex flex-col gap-x-4 z-[10] bg-[#222222] no-scrollbar' >
@@ -40,7 +40,7 @@ function Lens({ setShowLens }) {
                     crop={getCropData}
                     />
                 </div>
-            )}
+             )} 
             <ImageSearchScrollBar croppedImage={croppedImage} setShowLens={setShowLens}/>
 
         </div>

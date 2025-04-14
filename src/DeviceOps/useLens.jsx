@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import Cropper from 'react-cropper';
 
@@ -24,20 +24,19 @@ const useLens = () => {
     }
   };
 
-  const getCropData = () => {
-    if (cropperRef.current) {
+  const getCropData = useCallback(() => {
+    if (cropperRef.current && cropperRef.current.cropper.getCroppedCanvas()) {
       setCroppedImage(cropperRef.current.cropper.getCroppedCanvas().toDataURL());
     }
-  };
-
-  console.log("cropped image", croppedImage)
+  });
 
   return {
     takePhoto, 
     croppedImage,
     getCropData,
     photo,
-    error
+    error,
+    cropperRef
   }
 
 };
